@@ -1,0 +1,88 @@
+<!--
+  @name Clock widget SVG
+  @author Andrew Eissen
+  @description A simple SVG widget clock making use of the principles of hierarchical modeling
+               discussed in the Week 3 reading. This clock is constructed of a number of simple
+               geometric shapes, primarily circles and lines, that are accented with properties
+               like "stroke-linecap='round'" to make them more aesthetically pleasing. The ratios
+               of the angular speeds between the hour, minute, and second hands are accurately
+               represented as 1:12:720 as per standard analog clocks.
+  @see <a href="https://en.wikipedia.org/wiki/Clock_angle_problem">Clock angle problem</a>
+  @see <a href="https://css-tricks.com/guide-svg-animations-smil/">Helpful tutorial</a>
+  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+    width="150" height="150" viewBox="0 0 150 150">
+
+    <!-- Definitions for hour tick mark, clock frame, and all three clock hands-->
+    <defs>
+
+        <!-- Definition of hour mark class thingie, to be added 12 times to the frame object -->
+        <g id="hourMark">
+            <line x1="0" y1="-50" x2="0" y2="-43" stroke-width="5" stroke="black"
+                stroke-linecap="round"/>
+        </g>
+
+        <!--
+          Definition of clock frame object, composed of circles and a set of hourMark elements.
+          The decision to add a second circle in the center of the frame was done to make the
+          collection of clock hand line endings located there appear a bit less jarring and ugly
+          from an aesthetics point of view.
+          -->
+        <g id="frame">
+            <circle id="outerFrame" cx="0" cy="0" r="50" fill="none" stroke="black"
+                stroke-width="7" />
+            <circle id="innerFrame" cx="0" cy="0" r="3" fill="black" stroke="black"
+                stroke-width="5" />
+
+            <!-- Add tick mark class objects, rotated as needed -->
+            <use xlink:href="#hourMark" />
+            <use xlink:href="#hourMark" transform="rotate(30)"/>
+            <use xlink:href="#hourMark" transform="rotate(60)"/>
+            <use xlink:href="#hourMark" transform="rotate(90)"/>
+            <use xlink:href="#hourMark" transform="rotate(120)"/>
+            <use xlink:href="#hourMark" transform="rotate(150)"/>
+            <use xlink:href="#hourMark" transform="rotate(180)"/>
+            <use xlink:href="#hourMark" transform="rotate(210)"/>
+            <use xlink:href="#hourMark" transform="rotate(240)"/>
+            <use xlink:href="#hourMark" transform="rotate(270)"/>
+            <use xlink:href="#hourMark" transform="rotate(300)"/>
+            <use xlink:href="#hourMark" transform="rotate(330)"/>
+        </g>
+
+        <!-- Definition of hourHand -->
+        <g id="hourHand">
+            <line id="hourHandLine" x1="0" y1="0" x2="0" y2="-20" stroke-width="5" stroke="black"
+                stroke-linecap="round"/>
+            <animateTransform attributeName="transform" attributeType="XML"
+                type="rotate" from="0" to="360" dur="360s" repeatCount="indefinite"/>
+        </g>
+
+        <!-- Definition of minuteHand -->
+        <g id="minuteHand">
+            <line id="minute" x1="0" y1="0" x2="0" y2="-27" stroke-width="5" stroke="black"
+                stroke-linecap="round"/>
+            <animateTransform attributeName="transform" attributeType="XML"
+                type="rotate" from="0" to="360" dur="30s" repeatCount="indefinite"/>
+        </g>
+
+        <!-- Definition of secondHand -->
+        <g id="secondHand">
+            <line id="second" x1="0" y1="0" x2="0" y2="-30" stroke-width="3" stroke="black"
+                stroke-linecap="round"/>
+            <animateTransform attributeName="transform" attributeType="XML"
+                type="rotate" from="0" to="360" dur="0.5s" repeatCount="indefinite"/>
+        </g>
+    </defs>
+
+    <!--
+      Begin by transforming the entire clock structure and its origin away from the upper
+      lefthand corner before invoking the creation of the needed pseudo-objects.
+      -->
+    <g id="doTheThing" transform="translate(75, 75)">
+        <use xlink:href="#frame" />
+        <use xlink:href="#hourHand" />
+        <use xlink:href="#minuteHand" />
+        <use xlink:href="#secondHand" />
+    </g>
+</svg>
